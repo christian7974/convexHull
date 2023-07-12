@@ -7,11 +7,15 @@ label.place(x=100, y=200)
 points = []
 canvas = Canvas(window, bg='white')
 
+def drawButtons():
+    create_hull.pack()
+    clear_hull.pack()
 # window.geometry("400x400")
 def drawCircleAtMouseClick(event):
-    print ("clicked at", event.x, event.y)
+    # print ("clicked at", event.x, event.y)
     canvas.create_oval(event.x - 10, event.y - 10, event.x + 10, event.y + 10, outline='black', fill='black')
     points.append((event.x, event.y))
+
 canvas.bind("<Button-1>", drawCircleAtMouseClick)
 
 def findLeftmostLowPoint(pointA, pointB):
@@ -36,10 +40,17 @@ def findLowestPoint(list_of_points):
 def createHull():
     # Code to find the Convex Hull of the points goes here
     lowest_point = findLowestPoint(points)
-    return 0
+    print(lowest_point)
+
+def clearHull():
+    canvas.delete('all')
+    points.clear()
+    drawButtons()
 
 create_hull = Button(window, text="Generate Hull", command=createHull)
+clear_hull = Button(window, text="Clear Hull", command=clearHull)
 create_hull.pack()
+clear_hull.pack()
 
 canvas.pack(fill=BOTH, expand=True)
 window.maxsize(800, 800)
